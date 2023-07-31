@@ -1,4 +1,5 @@
 import { User } from "src/user/dto/user.dto";
+import { Apporoved } from "src/work/dto/apporoved.dto";
 import { Work } from "src/work/dto/work.dto";
 import { DataSource } from "typeorm";
 
@@ -11,7 +12,7 @@ export const AppDataSource = new DataSource({
     database: "anılaslan",
     synchronize: true,
     logging: true,
-    entities: [User,Work],
+    entities: [User,Work,Apporoved],
     subscribers: [],
     migrations: [],
 })

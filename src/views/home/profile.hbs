@@ -1,0 +1,91 @@
+<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+    <nav class="nav nav-borders">
+        <a class="nav-link ms-0" href="/user/profile/edit/{{user.data.id}}" target="__blank">Profilimi Düzenle</a>
+        <a class="nav-link active" href="" target="__blank">Bilgilerim</a>
+    </nav>
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <!-- Billing card 1-->
+            <div class="card h-100 border-start-lg border-start-primary">
+                <div class="card-body">
+                    <div class="small text-muted">Toplam Kazanç</div>
+                    <div class="h3">$20.00</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <!-- Billing card 2-->
+            <div class="card h-100 border-start-lg border-start-secondary">
+                <div class="card-body">
+                    <div class="small text-muted">Son İş Başvuru Tarihim</div>
+                    <div class="h3">July 15</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <!-- Billing card 3-->
+            <div class="card h-100 border-start-lg border-start-success">
+                <div class="card-body">
+                    <div class="small text-muted">Hesap Türü</div>
+                    <div class="h3 d-flex align-items-center">Şoför</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Payment methods card-->
+    <div class="card card-header-actions mb-4">
+        <div class="card-header">
+            Yaptığım İşler
+        </div>
+        <div class="card-body px-0">
+            <!-- Payment method 1-->
+            {{#each apporoved}}
+                        <div class="d-flex align-items-center justify-content-between px-4">
+                <div class="d-flex align-items-center">
+                    <div class="ms-4">
+                        <div class="small"> {{this.work.title}}</div>
+                    </div>
+                </div>
+                <div class="ms-4 small">
+                    <div class="badge bg-light text-dark me-3">Kazanç: {{this.work.price}}</div>
+                    <div class="text-xs text-muted">Tarih: {{this.work.create_at}} </div>
+                </div>
+            </div>
+            {{/each}}
+            <hr>
+        </div>
+    </div>
+    <!-- Billing history card-->
+    <div class="card mb-4">
+        <div class="card-header">Başvurularım</div>
+        <div class="card-body p-0">
+            <!-- Billing history table-->
+            <div class="table-responsive table-billing-history">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="border-gray-200" scope="col">Başvuru ID</th>
+                            <th class="border-gray-200" scope="col">İşin Adı</th>
+                            <th class="border-gray-200" scope="col">Nereden</th>
+                            <th class="border-gray-200" scope="col">Nereye</th>
+                            <th class="border-gray-200" scope="col">Fiyat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each works}}
+                                                <tr>
+                            <td>{{this.id}}</td>
+                            <td>{{this.title}}</td>
+                            <td> {{this.from_where}} </td>
+                            <td> {{where}} </td>
+                            <td> {{price}} </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

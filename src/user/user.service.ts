@@ -4,14 +4,21 @@ import { User } from "./dto/user.dto";
 import * as bcrypt from 'bcrypt';
 import { JwtService } from "src/customService/jwt.service";
 import { LazyModuleLoader } from "@nestjs/core";
+import { Work } from "src/work/dto/work.dto";
+import { In } from 'typeorm';
+import { Apporoved } from "src/work/dto/apporoved.dto";
 
 @Injectable()
 export class UserService {
 
     private userRepository:any
+    private workRepository:any
+    private apporovedRepository:any
 
     constructor(private readonly jwtService: JwtService, private lazyModuleLoader: LazyModuleLoader) {
         this.userRepository = AppDataSource.getRepository(User)
+        this.workRepository = AppDataSource.getRepository(Work)
+        this.apporovedRepository = AppDataSource.getRepository(Apporoved)
     }
 
     // Create User
@@ -88,9 +95,12 @@ export class UserService {
     // Get By Id
     async getUserById(id:string){
         try{
-
-
-            const user = await this.userRepository.findOneBy({id:id})
+            const user = await this.userRepository.findOne(
+                {
+                    where: {id:id},
+                    relations : ['apporoveds']
+                }
+            )
 
             if (user){
                 return {
@@ -100,6 +110,7 @@ export class UserService {
             }
 
         }catch(err){
+            console.log(err)
             throw new HttpException('Interval Server Error', HttpStatus.BAD_REQUEST)
         }
     }
@@ -139,5 +150,43 @@ export class UserService {
         }catch(err){
             throw new HttpException('Interval Server Error', HttpStatus.BAD_REQUEST)
         }
+    }
+
+    async getUserWorks(id:string){
+        try{
+
+            const works = await this.workRepository.find(
+                {
+                    where: {users: In[id]},
+                    relations: {
+                        users: true
+                    }
+                }
+            )
+
+            return works
+
+        }catch(err){
+            throw new HttpException('Interval Server Error', HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    async getUserApporoved(id:string){
+        
+        try{
+
+            const apporoved = await this.apporovedRepository.find(
+                {
+                    where: {user: In[id]},
+                    relations: ['user', 'work']
+                }
+            )
+            
+            return apporoved
+
+        }catch(err){
+            throw new HttpException('Interval Server Error', HttpStatus.BAD_REQUEST)
+        }
+
     }
 }

@@ -4,7 +4,8 @@
             <div class="search_bar">
                 <div class="input-group mb-3 border">
                     <input type="text" class="form-control" placeholder="Aramak istediğiniz kelime"
-                        aria-label="Recipient's username" aria-describedby="button-addon2" name="keyword" autocomplete="off">
+                        aria-label="Recipient's username" aria-describedby="button-addon2" name="keyword"
+                        autocomplete="off">
                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"
                             style="margin-right: 10px;"></i></button>
                 </div>
@@ -15,7 +16,7 @@
         <div class="container mt-5">
             <div class="row">
                 {{#each items}}
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-4 clearfix">
                     <div class="card text-center shadow">
                         <div class="card-header" style="font-weight: 900;">
                             <div class="card-header"
@@ -38,15 +39,15 @@
                                 <h5 class="card-title">{{this.title}}</h5>
                                 <p class="card-text">{{this.description}}
                                 </p>
-                                <button class=" btn-primary">İşe Başvur</button>
+                                <a href="/work/application/{{this.id}}" class="btn btn-primary">İşe Başvur</a>
                             </div>
                             <div class="card-footer text-muted">
                                 {{this.create_at}}
                             </div>
                         </div>
                     </div>
-                    {{/each}}
                 </div>
+                {{/each}}
             </div>
         </div>
     </div>

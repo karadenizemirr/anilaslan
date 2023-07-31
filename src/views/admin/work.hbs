@@ -1,3 +1,105 @@
-<h1>
-    Admin Work
-</h1>
+<div class="container">
+    <div class="row mt-5">
+        <div class="title text-center">
+            <h1>İşler</h1>
+        </div>
+        <div class="content">
+            <div class="d-flex justify-content-end mb-2">
+                <button class="btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#myModal">İş Ekle</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">İşin Adı</th>
+                            <th scope="col">Nereden</th>
+                            <th scope="col">Nereye</th>
+                            <th scope="col">Durum</th>
+                            <th scope="col">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each items}}
+                        <tr>
+                            <th scope="row">{{this.id}}</th>
+                            <td>{{this.title}}</td>
+                            <td> {{this.from_where}} </td>
+                            <td> {{this.where}} </td>
+                            <td> {{this.isStatus}} </td>
+                            <td>
+                                <span style="margin-right: 10px;">
+                                    <a href="/work/admin/detail/{{this.id}}" class="text-success">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                </span>
+                                <span class="ml-2">
+                                    <a href="/user/admin/delete/{{this.id}}" class="text-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fullscreen Modal -->
+<div class="modal fade modal-lg" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="/work/add" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">İş Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="İşin Adı" name="title">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <textarea name="description" placeholder="Açıklama" class="form-control mb-3" id="" cols="10" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="Nereden" name="from_where">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="Nereye" name="where">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="Airport No" name="airport_number">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="Tur" name="tour">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="Fiyat" name="price">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="Kişi Sayısı" name="person">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <textarea class="form-control md-3" name="note" placeholder="Not" ></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn-primary">İşi Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

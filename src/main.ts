@@ -15,7 +15,7 @@ async function bootstrap() {
 
   AppDataSource.initialize()
     .then(() => console.log('Database Connect Success'))
-    .catch(() => console.log('Database Connect Not Success'))
+    .catch((err) => console.log(err))
 
   app.useStaticAssets({
     root: join(__dirname, '..', 'src/public'),

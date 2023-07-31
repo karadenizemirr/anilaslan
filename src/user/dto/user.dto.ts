@@ -1,5 +1,6 @@
+import { Apporoved } from "src/work/dto/apporoved.dto";
 import { Work } from "src/work/dto/work.dto";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
@@ -37,6 +38,10 @@ export class User {
     @UpdateDateColumn()
     updated_at: Date
 
-    @OneToMany(() => Work, (work) => work.user, {cascade: true})
+    @ManyToMany(() => Work, (work) => work.users)
     works: Work[]
+
+    @OneToMany(() => Apporoved, (apporoved) => apporoved.user)
+    apporoveds: Apporoved[]
+    
 }
