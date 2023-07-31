@@ -1,15 +1,10 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Render, Req, Res, Session, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Render, Req, Res, Session, UseGuards } from "@nestjs/common";
 import { UserService } from "./user.service";
-import { Response } from "express";
 import { FastifyReply, FastifyRequest } from 'fastify';
 import * as secureSession from '@fastify/secure-session'
-import { WorkService } from "src/work/work.service";
-import { UserAuth } from "src/auth/user-auth/user-auth.decorator";
-import { UserAuthGuard } from "src/auth/user-auth/user-auth.guard";
 import { AdminAuthGuard } from "src/auth/admin-auth/admin-auth.guard";
 
 @Controller('user')
-@UseGuards(UserAuthGuard, AdminAuthGuard)
 export class UserController {
     constructor(
         private readonly userService: UserService
@@ -36,8 +31,14 @@ export class UserController {
 
         this.userService.updateUser(id['id'], bodyData)
         return res.redirect(302, `/user/profile/edit/${id}`)
-        
+    }
 
+    @Post('admin/update/:id')
+    @UseGuards(AdminAuthGuard)
+    adminUpdate(@Body() bodyData:any, @Param() id:string, @Res() res:FastifyReply){
+
+        this.userService.updateUser(id['id'], bodyData)
+        return res.redirect(302, `/user/profile/edit/${id}`)
     }
 
     @Get('/:id')
@@ -57,7 +58,12 @@ export class UserController {
 
         if (_login){
             session.set('token', _login.token)
-            res.redirect(302, '/work')
+            
+            if (_login.role === 'user'){
+                res.redirect(302, '/work')
+            }else if(_login.role === 'admin'){
+                res.redirect(302, '/user/admin/home')
+            }
         }
     }
 
@@ -73,20 +79,23 @@ export class UserController {
 
     // Admin Controllers
     @Get('admin/')
+    @UseGuards(AdminAuthGuard)
     @Render('admin/user')
     async adminGetAllUSer(){
         const users =await this.userService.getAllUser()
         
-        return {users}
+        return {users, role: 'admin', title: 'Kullanıcı İşlemleri'}
     }
 
     @Get('admin/delete/:id')
+    @UseGuards(AdminAuthGuard)
     adminDeleteUser(@Param() id:string, @Res() res:FastifyReply): void{
         this.userService.deleteUser(id['id'])
         res.redirect(302, 'admin/user')
     }
 
     @Get('admin/detail/:id')
+    @UseGuards(AdminAuthGuard)
     @Render('admin/user-detail')
     async adminUserDetail(@Param() id:string){
         const user = await this.userService.getUserById(id['id'])
@@ -95,7 +104,6 @@ export class UserController {
 
     @Get('profile/:id')
     @Render('home/profile')
-    @UserAuth('user')
     async getUserProfile(
         @Param() id:string
     ){
@@ -110,12 +118,28 @@ export class UserController {
     }
     @Get('profile/edit/:id')
     @Render('home/profile-edit')
-    @UserAuth('user')
     async editUserProfile(
         @Param() id:string
     ){
         const user = await this.userService.getUserById(id['id'])
 
         return {title: 'Profilimi Düzenle', user, role: 'user'}
+    }
+
+    // User Add
+    @Post('admin/add') 
+    @UseGuards(AdminAuthGuard)
+    async addUserWithAdmin(@Body() bodyData:any, @Res()res: FastifyReply){
+        const create = await this.userService.createUser(bodyData)
+        res.redirect(302, '/user/admin')
+        return create
+    }
+
+    // Admin Home
+    @Get('admin/home')
+    @UseGuards(AdminAuthGuard)
+    @Render('admin/home')
+    async getAdminHome(){
+        return {title: 'Yönetici Paneli', role: 'admin'}
     }
 }

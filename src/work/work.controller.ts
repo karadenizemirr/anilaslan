@@ -3,45 +3,42 @@ import { WorkService } from "./work.service";
 import {FastifyReply} from 'fastify'
 import * as secureSession from '@fastify/secure-session'
 import { JwtService } from "src/customService/jwt.service";
-import { UserAuthGuard } from "src/auth/user-auth/user-auth.guard";
 import { AdminAuthGuard } from "src/auth/admin-auth/admin-auth.guard";
-import { UserAuth } from "src/auth/user-auth/user-auth.decorator";
+import { UserAuthGuard } from "src/auth/user-auth/user-auth.guard";
 @Controller('work')
-@UseGuards(UserAuthGuard, AdminAuthGuard)
 export class WorkController {
-    role:string
-    constructor(private readonly workService: WorkService, private readonly jwtService: JwtService) {
-        this.role = "user"
-    }
-
-    @UserAuth('non-user')
+    
+    constructor(private readonly workService: WorkService, private readonly jwtService: JwtService) {}
+    
     @Post('add')
+    @UseGuards(AdminAuthGuard)
     addWork(@Body() bodyData:any, @Res() res:FastifyReply){
         
         res.redirect(302, 'admin/work')
         return this.workService.addWork(bodyData)
     }
 
+    
     @Get('add')
-    @UserAuth('non-user')
+    @UseGuards(AdminAuthGuard)
     @Render('admin/work')
     async getAddWork(){
         const items = await this.workService.getWorks()
-        return {title: 'İşler', items}
+        return {title: 'İşler', items, role: "admin"}
     }
 
     @Get('admin/detail/:id')
-    @UserAuth('non-user')
+    @UseGuards(AdminAuthGuard)
     @Render('admin/work-detail')
     async getAdminWorkDetail(@Param() id:string){
         const work = await this.workService.getWorkById(id['id'])
         
-        return {title: 'İş Detayı',work: work, users: work.data.users}
+        return {title: 'İş Detayı',work: work, users: work.data.users, role: "admin"}
     }
     
     @Get('/')
+    @UseGuards(UserAuthGuard)
     @Render('home/works')
-    @UserAuth('user')
     async getWorks(@Session() session:secureSession.Session) {
       const items = await this.workService.getWorks();
     
@@ -50,11 +47,12 @@ export class WorkController {
       const userId = parse_token['id']
 
 
-      return { items, title: "İş Ara" , role:this.role, userId};
+      return { items, title: "İş Ara" , role:"user", userId};
     }
 
     // Search Operations
     @Post('search')
+    @UseGuards(UserAuthGuard)
     async searchWork(@Body() bodyData: any, @Res() res:FastifyReply){
         const items = await this.workService.searchWork(bodyData['keyword'])
         
@@ -64,7 +62,7 @@ export class WorkController {
 
     // User Application
     @Get('application/:id')
-    @UserAuth('user')
+    @UseGuards(UserAuthGuard)
     async application(
         @Session() session: secureSession.Session,
         @Param() workId: string,
@@ -82,7 +80,7 @@ export class WorkController {
     }
 
     @Get('admin/apporeved/:id/:userId')
-    @UserAuth('non-user')
+    @UseGuards(AdminAuthGuard)
     async apporovedJop(
         @Param() workId:string,
         @Session() session: secureSession.Session,

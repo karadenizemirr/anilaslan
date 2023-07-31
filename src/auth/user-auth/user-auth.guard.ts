@@ -16,22 +16,16 @@ export class UserAuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest()
     const token = request.session as secureSession.Session
 
-    if(!roles){
-      return true
-    }
-
     if (token && token['token']){
       const parsed_token = this.jwtService.verifyToken(token['token'])
 
-      if (parsed_token.role === 'user' && roles[0] === 'non-user'){
-        const response = context.switchToHttp().getResponse()
-        response.redirect(302, '/work')
-        return false
-      }else if (parsed_token === 'user' && roles[0] === 'user'){
+      if (parsed_token.role === 'user'){
         return true
+      }else{
+        return false
       }
     }
 
-    return true
+    return false
   }
 }

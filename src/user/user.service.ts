@@ -33,10 +33,12 @@ export class UserService {
             user.password = data.password
             user.identity_no = data.identity_no
             user.password = await bcrypt.hash(data.password, 5)
+            user.role = data.role || 'user'
             const response = this.userRepository.save(user)
 
             return {
-                message: "success"
+                message: "success",
+                data: response
             }
         }catch(err){
             throw new HttpException('Interval Server Error', HttpStatus.BAD_REQUEST)
@@ -57,7 +59,9 @@ export class UserService {
                 user.email = data.email || user.email
                 user.password = data.password || user.password
                 user.identity_no = data.identity_no || user.identity_no
-
+                user.role = data.role || 'user'
+                user.status = data.status || false
+                
                 const response = this.userRepository.save(user)
                 return {
                     "message": "success",
@@ -131,7 +135,8 @@ export class UserService {
                     
                     return {
                         message: "success",
-                        token: token
+                        token: token,
+                        role: user.role
                     }
                 }
             }

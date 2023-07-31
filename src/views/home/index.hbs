@@ -13,21 +13,21 @@
                 <form action="/user/login" method="post">
                     <div class="row">
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="Mail Adresi" name="email" autocomplete="off">
+                            <input type="text" class="form-control" placeholder="Mail Adresi" name="email" autocomplete="off" {{#eq role 'user'}}disabled{{/eq}} >
                         </div>
                         <div class="col">
                             <input type="password" class="form-control" 
                             placeholder="Şifre" 
-                            name="password" autocomplete="off"
+                            name="password" autocomplete="off" {{#eq role 'user'}}disabled{{/eq}}
                             >
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">
-                            <button type="submit">
+                            <button type="submit" {{#eq role 'user'}}disabled{{/eq}}>
                                 <i class="fas fa-sign-in-alt mr-2" style="margin-right: 10px;"></i>Giriş Yap
                             </button>
-                            <a class="btn btn-secondary" href="/user/register">
+                            <a class="btn btn-secondary" href="/user/register" >
                                 <i class="fas fa-user-plus" style="margin-right: 10px;"></i>Kayıt Ol
                             </a>
                         </div>

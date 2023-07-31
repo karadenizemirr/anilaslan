@@ -5,7 +5,7 @@
         </div>
         <div class="content">
             <div class="d-flex justify-content-end mb-2">
-                <button class="btn-primary mr-2" >Kullanıcı Ekle</button>
+                <button class="btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#myModal">Kullanıcı Ekle</button>
             </div>
             <div class="table-responsive">
                 <table class="table">
@@ -45,6 +45,54 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-lg" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="/user/admin/add" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Kullanıcı Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="Adı" name="name" autocomplete="off">
+                        </div>
+                                                <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="Soyadı" name="surname" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="Telefon Numarası" name="phone_number" autocomplete="off">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="Mail Adresi" name="email" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="Şifre" name="password" autocomplete="off">
+                        </div>
+                        <div class="col">
+                            <select name="role" id="" class="form-select form-control mb-3" >
+                                <option value="user">Şoför</option>
+                                <option value="admin">Yönetici</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="T.C Numaraso" name="identity_no" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn-primary">Kullanıcı Ekle</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

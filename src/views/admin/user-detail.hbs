@@ -7,7 +7,7 @@
         </div>
         <div class="card p-4 shadow ">
             <div class="card-body">
-                <form action="">
+                <form action="/user/admin/update/{{user.data.id}}" method="post">
                     <div class="row">
                         <div class="col">
                             <input type="text" class="form-control mb-3" value="{{user.data.name}}" name="name"
@@ -64,7 +64,7 @@
                     </div>
                     <div class="row">
                         <div class="col text-center mt-2">
-                            <a href="" class="btn btn-success" >Güncelle</a>
+                            <button class="btn btn-success" type="submit" >Güncelle</button>
                             <a href="/user/admin/delete/{{user.data.id}}" class="btn btn-danger" >Sil</a>
                         </div>
                     </div>

@@ -22,22 +22,53 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Menüler -->
-        {{#if role}}
+        {{#eq role "admin"}}
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="/user/profile/{{userId}}"><i class="fas fa-info-circle" style="margin-right: 10px;"></i>Profilim</a>
+              <a class="nav-link" href="/user/admin/home"><i class="fas fa-home"
+                  style="margin-right: 10px;"></i>Anasayfa</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/work"><i class="fas fa-search" style="margin-right: 10px;"></i>İş Bul</a>
+              <a class="nav-link" href="/user/admin"><i class="fas fa-user" style="margin-right: 10px;"></i>Kullanıcı
+                İşlemleri</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link btn" href="user/logout"> <i class="fas fa-sign-out-alt"
+              <a class="nav-link" href="/work/add"><i class="fas fa-bullhorn" style="margin-right: 10px;"></i>İlan
+                İşlemleri</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn" href="/user/logout"> <i class="fas fa-user-plus"
                   style="margin-right: 10px;"></i>Çıkış
                 Yap</a>
             </li>
           </ul>
         </div>
+        {{/eq}}
+
+        {{#eq role "user"}}
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/user/admin/home"><i class="fas fa-home"
+                  style="margin-right: 10px;"></i>Anasayfa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/profile/{{userId}}"><i class="fas fa-user" style="margin-right: 10px;"></i>Profilim</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/work"><i class="fas fa-search" style="margin-right: 10px;"></i></i>İş Ara</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn" href="/user/logout"> <i class="fas fa-user-plus"
+                  style="margin-right: 10px;"></i>Çıkış
+                Yap</a>
+            </li>
+          </ul>
+        </div>
+        {{/eq}}
+
+        {{#if role}}
         {{else}}
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
@@ -51,10 +82,12 @@
               <a class="nav-link" href="/work"><i class="fas fa-search" style="margin-right: 10px;"></i>İş Bul</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link btn" href="#"> <i class="fas fa-user-plus" style="margin-right: 10px;"></i>Kayıt Ol</a>
+              <a class="nav-link btn" href="/user/register"> <i class="fas fa-user-plus"
+                  style="margin-right: 10px;"></i>Kayıt Ol</a>
             </li>
           </ul>
         </div>
+
         {{/if}}
       </div>
     </nav>

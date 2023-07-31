@@ -6,6 +6,7 @@ import { AppDataSource } from './customService/database';
 import secureSession from '@fastify/secure-session';
 import fastifyCsrf from '@fastify/csrf-protection';
 import * as handlebars from 'handlebars';
+import { GlobalExceptionFilter } from './middleware/notfound.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -49,6 +50,7 @@ async function bootstrap() {
   });
 
   await app.register(fastifyCsrf);
+  app.useGlobalFilters(new GlobalExceptionFilter())
 
   await app.listen(process.env.PORT ?? 3000, process.env.HOST || '0.0.0.0');
 }
