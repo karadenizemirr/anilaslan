@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="row">
+        <div class="title text-center">
+            <h1>
+                Kullanıcı Detayları & Güncelleme
+            </h1>
+        </div>
+        <div class="card p-4 shadow ">
+            <div class="card-body">
+                <form action="">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" value="{{user.data.name}}" name="name"
+                                autocomplete="off">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" value="{{user.data.surname}}" name="surname"
+                                autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" value="{{user.data.phone_number}}"
+                                name="phone_number" autocomplete="off">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" value="{{user.data.email}}" name="email"
+                                autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" placeholder="{{user.data.password}}"
+                                name="password" autocomplete="off" disabled>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" value="{{user.data.identity_no}}"
+                                name="identity_no" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <select class="form-select md-3" aria-label="Kullanıcı Rolü" name="role" >
+                                <option value="user" {{#eq role "user" }}selected{{/eq}}>Kullanıcı</option>
+                                <option value="admin" {{#eq role "admin" }}selected{{/eq}}>Yönetici</option>
+                            </select>
+
+                        </div>
+                        <div class="col">
+                            <select class="form-select md-3" aria-label="Kullanıcı Durumu" name="status" >
+                                <option value="user" {{#eq status 1}}selected{{/eq}}>Aktif</option>
+                                <option value="admin" {{#eq status 0}}selected{{/eq}}>Aktif Değil</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control mb-3 mt-3" placeholder="{{user.data.created_at}}" name="identity_no" autocomplete="off" disabled>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control mb-3 mt-3" placeholder="{{user.data.updated_at}}" name="identity_no" autocomplete="off" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center mt-2">
+                            <a href="" class="btn btn-success" >Güncelle</a>
+                            <a href="/user/admin/delete/{{user.data.id}}" class="btn btn-danger" >Sil</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

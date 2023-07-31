@@ -1,0 +1,55 @@
+import { NestFactory } from '@nestjs/core';
+import { NestFastifyApplication, FastifyAdapter } from '@nestjs/platform-fastify';
+import { AppModule } from './app.module';
+import { join } from 'path';
+import { AppDataSource } from './customService/database';
+import secureSession from '@fastify/secure-session';
+import fastifyCsrf from '@fastify/csrf-protection';
+import * as handlebars from 'handlebars';
+
+async function bootstrap() {
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter(),
+  );
+
+  AppDataSource.initialize()
+    .then(() => console.log('Database Connect Success'))
+    .catch(() => console.log('Database Connect Not Success'))
+
+  app.useStaticAssets({
+    root: join(__dirname, '..', 'src/public'),
+    prefix: '/public/',
+  });
+  app.setViewEngine({
+    engine: {
+      handlebars: require('handlebars'),
+    },
+    templates: join(__dirname, '..', 'src/views'),
+    layout: 'layouts/main'
+  });
+
+  handlebars.registerHelper('eq', function (a, b, options) {
+    if (a === b) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
+  await app.register(secureSession, {
+    secret: 'averylogphrasebiggerthanthirtytwochars',
+    salt: 'mq9hDxBVDbspDR6n',
+    cookie: {
+      path: '/',
+      secure: true,
+      httpOnly: true,
+      sameSite: 'strict',
+      maxAge: 3600000, // 1 saat
+    }
+  });
+
+  await app.register(fastifyCsrf);
+
+  await app.listen(3000);
+}
+bootstrap();

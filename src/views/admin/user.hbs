@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row mt-5">
+        <div class="title text-center">
+            <h1>Kullanıcı İşlemleri</h1>
+        </div>
+        <div class="content">
+            <div class="d-flex justify-content-end mb-2">
+                <button class="btn-primary mr-2" >Kullanıcı Ekle</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Adı Soyadı</th>
+                            <th scope="col">Tel.No</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Durum</th>
+                            <th scope="col">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each users}}
+                        <tr>
+                            <th scope="row">{{this.id}}</th>
+                            <td>{{this.name}} {{this.surname}}</td>
+                            <td> {{this.phone_number}} </td>
+                            <td> {{this.role}} </td>
+                            <td> {{this.status}} </td>
+                            <td>john.doe@example.com</td>
+                            <td>
+                                <span style="margin-right: 10px;">
+                                    <a href="/user/admin/detail/{{this.id}}" class="text-success">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                </span>
+                                <span class="ml-2">
+                                    <a href="/user/admin/delete/{{this.id}}" class="text-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

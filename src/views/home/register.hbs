@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 mt-auto mb-auto">
+            <div class="card p-4">
+                <div class="card-title text-center mb-2">
+                    <h1 class="text-primary">
+                        Kayıt Ol
+                    </h1>
+                    <p>
+                        Aradığın işi hemen bulmak için kayıt ol.
+                    </p>
+                </div>
+                <div class="card-content">
+                    <form action="/user/register" method="post">
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control mb-3" placeholder="Adınız" name="name" autocomplete="off">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control mb-3" placeholder="Soyadınız" name="surname" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control mb-3" placeholder="Telefon Numarası" name="phone_number" autocomplete="off">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control mb-3" placeholder="Mail Adresi" name="email" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control mb-3" placeholder="T.C Kimlik Numarası" name="identity_no" autocomplete="off">
+                            </div>
+                            <div class="col">
+                                <input type="password" class="form-control mb-3" placeholder="Şifre" name="password" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <button>
+                                    Kayıt Ol
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <img src="/public/login-header.png" alt="" class="img-fluid">
+        </div>
+    </div>
+</div>
