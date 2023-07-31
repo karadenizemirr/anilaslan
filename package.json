@@ -46,7 +46,8 @@
     "typeorm": "^0.3.17",
     "uuid": "^9.0.0",
     "typescript": "^5.1.3",
-    "@nestjs/cli": "^10.0.0"
+    "@nestjs/cli": "^10.0.0",
+    "heroku-postbuild": "NODE_ENV=dev npm install --omit --no-shrinkwrap && npm run build"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
