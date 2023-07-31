@@ -18,6 +18,7 @@ async function bootstrap() {
     .then(() => console.log('Database Connect Success'))
     .catch((err) => console.log(err))
 
+    
   app.useStaticAssets({
     root: join(__dirname, '..', 'src/public'),
     prefix: '/public/',
@@ -50,7 +51,7 @@ async function bootstrap() {
   });
 
   await app.register(fastifyCsrf);
-  app.useGlobalFilters(new GlobalExceptionFilter())
+  //app.useGlobalFilters(new GlobalExceptionFilter())
 
   await app.listen(process.env.PORT ?? 3000, process.env.HOST || '0.0.0.0');
 }

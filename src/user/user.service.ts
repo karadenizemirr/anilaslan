@@ -160,18 +160,16 @@ export class UserService {
     async getUserWorks(id:string){
         try{
 
-            const works = await this.workRepository.find(
-                {
-                    where: {users: In[id]},
-                    relations: {
-                        users: true
-                    }
-                }
-            )
+            const works = await this.workRepository
+            .createQueryBuilder('work')
+            .innerJoinAndSelect('work.users', 'user')
+            .where('user.id = :id', { id })
+            .getMany();
 
             return works
 
         }catch(err){
+            console.log(err)
             throw new HttpException('Interval Server Error', HttpStatus.BAD_REQUEST)
         }
     }

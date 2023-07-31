@@ -1,7 +1,7 @@
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
-        <a class="nav-link ms-0" href="/user/profile/edit/{{user.data.id}}" >Profilimi Düzenle</a>
+        <a class="nav-link ms-0" href="/user/profile/edit/{{user.data.id}}">Profilimi Düzenle</a>
         <a class="nav-link active" href="">Bilgilerim</a>
     </nav>
     <hr class="mt-0 mb-4">
@@ -37,26 +37,41 @@
     <!-- Payment methods card-->
     <div class="card card-header-actions mb-4">
         <div class="card-header">
-            Yaptığım İşler
+            Onaylanan İşler
         </div>
         <div class="card-body px-0">
             <!-- Payment method 1-->
-            {{#each apporoved}}
-                        <div class="d-flex align-items-center justify-content-between px-4">
-                <div class="d-flex align-items-center">
-                    <div class="ms-4">
-                        <div class="small"> {{this.work.title}}</div>
-                    </div>
-                </div>
-                <div class="ms-4 small">
-                    <div class="badge bg-light text-dark me-3">Kazanç: {{this.work.price}}</div>
-                    <div class="text-xs text-muted">Tarih: {{this.work.create_at}} </div>
-                </div>
-            </div>
-            {{/each}}
+            <table class="table table-sm">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">İşin Adı</th>
+                        <th scope="col">Nereden</th>
+                        <th scope="col">Nereye</th>
+                        <th scope="col">Fiyatı</th>
+                        <th scope="col" class="text-end">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each apporoved}}
+                    <tr class="text-center">
+                        <th>{{this.work.title}}</th>
+                        <td>{{this.work.from_where}}</td>
+                        <td>{{this.work.where}}</td>
+                        <td>{{this.work.price}}</td>
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-warning" onclick="toggleDetails(this)">Detaylar</button>
+
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+
+            </table>
             <hr>
         </div>
     </div>
+    <div id="detailsContainer" class="card-header-actions mb-4"></div>
+
     <!-- Billing history card-->
     <div class="card mb-4">
         <div class="card-header">Başvurularım</div>
@@ -75,7 +90,7 @@
                     </thead>
                     <tbody>
                         {{#each works}}
-                                                <tr>
+                        <tr>
                             <td>{{this.id}}</td>
                             <td>{{this.title}}</td>
                             <td> {{this.from_where}} </td>
@@ -89,3 +104,41 @@
         </div>
     </div>
 </div>
+<script>
+    function toggleDetails(button) {
+        const row = button.closest('tr');
+        const title = row.querySelector('th').textContent;
+        const fromWhere = row.querySelector('td:nth-child(2)').textContent;
+        const where = row.querySelector('td:nth-child(3)').textContent;
+        const price = row.querySelector('td:nth-child(4)').textContent;
+
+        const detailsContainer = document.getElementById('detailsContainer');
+
+        if (button.dataset.showDetails === 'true') {
+            detailsContainer.innerHTML = '';
+            button.dataset.showDetails = 'false';
+        } else {
+            const detailsCard = document.createElement('div');
+            detailsCard.classList.add('card');
+            detailsCard.innerHTML = `
+        <div class="card-body">
+          <h5 class="card-title">${title}</h5>
+          <p class="card-text">From: ${fromWhere}</p>
+          <p class="card-text">Where: ${where}</p>
+          <p class="card-text">Price: ${price}</p>
+          <button class="btn btn-sm btn-danger" onclick="removeCard(this)">Kapat</button>
+        </div>
+      `;
+
+            detailsContainer.innerHTML = '';
+            detailsContainer.appendChild(detailsCard);
+            button.dataset.showDetails = 'true';
+        }
+    }
+
+    function removeCard(button) {
+        const detailsContainer = document.getElementById('detailsContainer');
+        detailsContainer.innerHTML = '';
+        button.dataset.showDetails = 'false';
+    }
+</script>

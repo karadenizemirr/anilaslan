@@ -111,8 +111,6 @@ export class UserController {
         const works = await this.userService.getUserWorks(id['id'])
         const apporoved =await this.userService.getUserApporoved(id['id'])
         const user = await this.userService.getUserById(id['id'])
-        console.log(apporoved)
-
 
         return {title: 'Profilim', works, apporoved, user,role: 'user'}
     }

@@ -19,6 +19,6 @@ export class AppController {
     if (token){
       this.role = true
     }
-    return {title: "Anasayfa", role: 'user'}
+    return {title: "Anasayfa"}
   }
 }
