@@ -44,11 +44,11 @@ export class Work {
     @UpdateDateColumn()
     update_at: Date
 
-    @ManyToMany(() => User)
+    @ManyToMany(() => User, {cascade: true})
     @JoinTable()
     users: User[]
 
-    @OneToMany(() => Apporoved, (apporoved) => apporoved.work)
+    @OneToMany(() => Apporoved, (apporoved) => apporoved.work, {cascade: true})
     apporoveds: Apporoved[]
 
 }

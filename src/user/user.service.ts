@@ -190,6 +190,20 @@ export class UserService {
         }catch(err){
             throw new HttpException('Interval Server Error', HttpStatus.BAD_REQUEST)
         }
+    }
 
+    async getAllUserApporoved(){
+        try{
+
+            const apporoveds = await this.apporovedRepository.find(
+                {
+                    relations: ['user','work']
+                }
+                )
+            return apporoveds
+
+        }catch(err){
+            throw new HttpException('Interval Server Error', HttpStatus.BAD_REQUEST)
+        }
     }
 }

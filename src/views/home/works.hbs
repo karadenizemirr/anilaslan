@@ -22,11 +22,9 @@
                             <div class="card-header"
                                 style="font-weight: 900; display: flex; justify-content: space-between;">
                                 <div class="location" style="display: flex; align-items: center;">
-                                    <span><i class="fas fa-location-arrow"
-                                            style="margin-right: 10px;"></i>Nereden:</span>
+                                    <span>Nereden:</span>
                                     <span class="text-uppercase">{{this.from_where}}</span> &nbsp; &nbsp;
-                                    <span><i class="fas fa-plane-departure"
-                                            style="margin-right: 10px;"></i>Nereye:</span>
+                                    <span>Nereye:</span>
                                     <span class="text-uppercase">{{this.where}}</span>
                                 </div>
                                 <div class="price">
@@ -42,7 +40,7 @@
                                 <a href="/work/application/{{this.id}}" class="btn btn-primary">İşe Başvur</a>
                             </div>
                             <div class="card-footer text-muted">
-                                {{this.create_at}}
+                                {{dateFormat this.create_at}}
                             </div>
                         </div>
                     </div>

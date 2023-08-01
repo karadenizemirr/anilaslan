@@ -5,8 +5,8 @@ import { join } from 'path';
 import { AppDataSource } from './customService/database';
 import secureSession from '@fastify/secure-session';
 import fastifyCsrf from '@fastify/csrf-protection';
-import * as handlebars from 'handlebars';
 import { GlobalExceptionFilter } from './middleware/notfound.middleware';
+import handlebars from './helpers/handlebar.helpers';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -31,12 +31,7 @@ async function bootstrap() {
     layout: 'layouts/main'
   });
 
-  handlebars.registerHelper('eq', function (a, b, options) {
-    if (a === b) {
-      return options.fn(this);
-    }
-    return options.inverse(this);
-  });
+
 
   await app.register(secureSession, {
     secret: 'averylogphrasebiggerthanthirtytwochars',
@@ -51,6 +46,7 @@ async function bootstrap() {
   });
 
   await app.register(fastifyCsrf);
+  handlebars
   app.useGlobalFilters(new GlobalExceptionFilter())
 
   await app.listen(process.env.PORT ?? 3000, process.env.HOST || '0.0.0.0');

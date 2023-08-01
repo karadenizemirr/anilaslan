@@ -14,7 +14,7 @@ export class WorkController {
     @UseGuards(AdminAuthGuard)
     addWork(@Body() bodyData:any, @Res() res:FastifyReply){
         
-        res.redirect(302, 'admin/work')
+        res.redirect(302, '/work/add')
         return this.workService.addWork(bodyData)
     }
 
@@ -22,7 +22,7 @@ export class WorkController {
     @Get('add')
     @UseGuards(AdminAuthGuard)
     @Render('admin/work')
-    async getAddWork(){
+    async getAddWork(@Res() res:FastifyReply){
         const items = await this.workService.getWorks()
         return {title: 'İşler', items, role: "admin"}
     }
@@ -32,7 +32,6 @@ export class WorkController {
     @Render('admin/work-detail')
     async getAdminWorkDetail(@Param() id:string){
         const work = await this.workService.getWorkById(id['id'])
-        
         return {title: 'İş Detayı',work: work, users: work.data.users, role: "admin"}
     }
     
@@ -90,5 +89,19 @@ export class WorkController {
         this.workService.apporevedJops(workId['userId'], workId['id'])
         res.redirect(302, '/work/add')
         
+    }
+
+    @Get('admin/delete/:id')
+    @UseGuards(AdminAuthGuard)
+    async adminWorkDelete(@Param() id:string, @Res() res:FastifyReply){
+        this.workService.deleteWork(id['id'])
+        res.redirect(302, '/work/add')
+    }
+
+    @Post('admin/update/:id')
+    @UseGuards(AdminAuthGuard)
+    async adminWorkUpdate(@Param() id:string, @Res() res:FastifyReply, @Body() bodyData:any){
+        this.workService.updateWork(id, bodyData)
+        res.redirect(302, '/work/add')        
     }
 }

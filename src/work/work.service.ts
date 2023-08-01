@@ -32,7 +32,7 @@ export class WorkService {
             work.price = data.price
 
             this.workRepository.save(work)
-
+ 
             return {
                 message: "success"
             }
@@ -47,7 +47,7 @@ export class WorkService {
     async getWorks(){
         try{
 
-            return await this.workRepository.find()
+            return await this.workRepository.find({order: {create_at: 'DESC'}})
 
         }catch(err){
             throw new HttpException('Interval Server Error', HttpStatus.BAD_REQUEST)
@@ -79,7 +79,6 @@ export class WorkService {
 
             const work = await this.workRepository.findOne({where: {id:id}, relations: ['users', 'apporoveds']})
 
-            console.log(work)
             if(work){
                 return {
                     message: "success",
@@ -137,5 +136,55 @@ export class WorkService {
             console.log(err);
             throw new HttpException('Interval Server Error', HttpStatus.BAD_REQUEST);
           }
+    }
+
+    // Delete Work
+    async deleteWork(id:string){
+        try{
+
+            const work = await this.workRepository.findOne({where: {id:id}})
+            
+            if (work){
+                await this.workRepository.remove(work)
+
+                return {
+                    message: "success"
+                }
+            }
+
+        }catch(err){
+            throw new HttpException('Interval Server Error', HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    async updateWork(workId:string, data:any){
+        try{
+
+
+            const work = await this.workRepository.findOne({where: {id:workId}})
+            if (work){
+
+                work.title = data.title || work.title
+                work.description = data.description || work.description
+                work.airport_number = data.airport_number || work.airport_number
+                work.tour = data.tour || work.tour
+                work.person = data.person || work.person
+                work.note = data.note || work.note
+                work.price = data.price || work.price
+                work.from_where = data.from_where || work.from_where
+                work.where = data.where || work.where
+
+                await this.workRepository.save(work)
+
+                return {
+                    message: "success"
+                }
+            }else{
+                throw new HttpException('Work not found', HttpStatus.BAD_REQUEST)
+            }
+
+        }catch(err){
+            throw new HttpException('Interval Server Error', HttpStatus.BAD_REQUEST)
+        }
     }
 }

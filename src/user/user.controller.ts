@@ -138,6 +138,7 @@ export class UserController {
     @UseGuards(AdminAuthGuard)
     @Render('admin/home')
     async getAdminHome(){
-        return {title: 'Yönetici Paneli', role: 'admin'}
+        const apporoveds =await this.userService.getAllUserApporoved()
+        return {title: 'Yönetici Paneli', role: 'admin', apporoveds}
     }
 }

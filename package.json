@@ -18,13 +18,13 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json"
-    
   },
   "dependencies": {
     "@fastify/csrf-protection": "^6.3.0",
     "@fastify/secure-session": "^6.2.0",
     "@fastify/static": "^6.10.2",
     "@fastify/view": "^8.0.0",
+    "@nestjs/cli": "^10.0.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/ng-universal": "^8.0.0",
@@ -40,13 +40,13 @@
     "handlebars-helpers": "^0.10.0",
     "hbs": "^4.2.0",
     "jsonwebtoken": "^9.0.1",
+    "moment": "^2.29.4",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.17",
-    "uuid": "^9.0.0",
     "typescript": "^5.1.3",
-    "@nestjs/cli": "^10.0.0"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
